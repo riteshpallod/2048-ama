@@ -1,13 +1,13 @@
 import numpy as np
 from random import randint
 import time
+import os
 
 class Game():
 	Matrix = np.zeros((4,4),dtype = np.int)
 	#Matrix = [[0 for x in range(4)] for y in range(4)] 
  
 	def __init__(self):
-		print("help")
 		for col in range(0,4):	
 			for i in range(0,4):
 				self.Matrix[i][col] = 0
@@ -18,7 +18,6 @@ class Game():
 
 
 	def add_a_value(self):
-		print("amount of nonzeros:", np.count_nonzero(self.Matrix)+1)
 		if (np.count_nonzero(self.Matrix) == 16):
 			return -1
 		
@@ -32,7 +31,7 @@ class Game():
 		
 		self.Matrix[r][c] = num
 		#self.print_mat()
-		return 1
+		return np.count_nonzero(self.Matrix)
 	
 	def swipe_down(self):
 		for col in range(0,4):	
@@ -117,26 +116,31 @@ instance1 = Game()
 #instance1.print_mat()
 instance1.add_a_value()
 a = 5
+non_zeros = 1
+direction = ''
 
 while (True):
+	_ = os.system('clear')
+	print("amount of nonzeros:", non_zeros)
+	print(direction)
 	instance1.print_mat()
 	asa = input()
 	a = int(asa)
 	if (a == 2):
-		print("down..")
+		direction = "down.."
 		instance1.swipe_down()
-		instance1.add_a_value()
+		non_zeros = instance1.add_a_value()
 	elif (a == 8):
-		print("up..")
+		direction = "up.."
 		instance1.swipe_up()
-		instance1.add_a_value()
+		non_zeros = instance1.add_a_value()
 	elif (a == 4):
-		print("left..")
+		direction = "left.."
 		instance1.swipe_left()
-		instance1.add_a_value()
+		non_zeros = instance1.add_a_value()
 	elif (a == 6):
-		print("right..")
+		direction = "right.."
 		instance1.swipe_right()
-		instance1.add_a_value()
+		non_zeros = instance1.add_a_value()
 	else:
 		instance1.print_mat() 
